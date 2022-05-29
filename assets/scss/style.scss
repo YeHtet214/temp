@@ -1,0 +1,406 @@
+
+@import '../../node_modules/bootstrap/scss/_functions.scss';
+@import '../../node_modules/bootstrap/scss/_variables.scss';
+@import '../../node_modules/bootstrap/scss/_utilities.scss';
+
+$red: #E41C26;
+$dark: #111111;
+$light_dark: #222222;
+$grayish: #2A2A2A;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    font-size: 14px;
+}
+
+$utilities: (
+    fontSizes: (
+        property: font-size,
+        class: fs,
+        responsive: true,
+        values: (
+            mobile_p: 16px,
+            desktop_p: 18px,
+            sm: 14px,
+            h1: 64px,
+            h2: 48px,
+            h3: 32px,
+            h4: 25px,
+            lgh: 64px,
+            smh: 35px,
+        )
+    ),    
+
+    spacing: (
+        property: 'letter-spacing',
+        class: 'ls',
+        responsive: true,
+        values: (
+            xs: .1em,
+            sm: .2em,
+            md: .5em,
+            lg: .7em,
+            xl: 1em
+        )
+    ),
+
+    colors: (
+        property: color,
+        responsive: true,
+        values: (
+            'red': $red,
+            'dark': $dark,
+            'light_dark': $light_dark,
+            'grayish': $grayish,
+        )
+    ),
+
+    backgrounds: (
+        property: background-color,
+        class: 'bg',
+        responsive: true,
+        values: (
+            'red': $red,
+            'dark': $dark,
+            'light_dark': $light_dark,
+            'grayish': $grayish,
+        )
+    ),
+
+    width: (
+        property: width,
+        class: w,
+        responsive: true,
+        values: (
+            '40': 40%,
+            '50': 50%,
+            '100': 100%,
+        )
+    ),
+
+    background-image: (
+        property: background-image,
+        class: bg-img,
+        values: (
+            'progress': url('../svgs/16-express-gray.png'),
+            'workout': url('../svgs/XMLID_1490_gray.png'),
+            'nutrition': url('../svgs/clipboard-gray.png'),
+            'about': url('../svgs/about-background.png')
+        )
+    ),
+
+    background-position: (
+        property: background-position,
+        class: bg-pos,
+        responsive: true,
+        values: (
+            'cr': 'center right',
+            'cb': 'bottom center'
+        )
+    )
+
+
+);
+
+@import '../..//node_modules/bootstrap/scss/bootstrap.scss';
+
+// Center Elements in a parent 
+@mixin center() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+};
+
+@mixin button($size: 1px,$px: 1.5em, $py: .4em, $color: $red, $outlined: false, $filled: false) {
+    padding: #{$py} #{$px};
+
+    @if $outlined {
+        border: #{$size} solid #{$color};
+        color: #{$color};
+        background-color: transparent;
+    }
+
+    @if $filled {
+        background-color: #{$color};
+        color: #ffffff;
+    }
+    
+}   
+
+.flex-center {
+    @include center();
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+@mixin psuedo($pos: absolute,$content: '', $top: 0, $left: 0, $bottom: 0, $right: 0, $loc: before) {
+    position: relative;
+
+    &:#{$loc} {
+        content: $content;
+        position: $pos;
+        top: $top;
+        left: $left;
+        bottom: $bottom;
+        right: $right;
+        @content;
+    }
+}
+
+// Header 
+#home {
+
+    .header {
+        position: relative;
+        z-index: 1000;
+
+        .contact-info div {
+            border-right: 1px solid #fff1;
+        }
+        
+        .social-medias div {
+            border-left: 1px solid #fff1;
+            width: 3em;
+        }
+
+        .nav-items {
+            display: none;
+            transform: translate(0);
+        }
+
+        // Mobile Navbar
+        .show-menu {
+            position: absolute;
+            z-index: -1;
+            background: $white;
+            left: 0;
+            width: 100vw;
+            bottom: 0;
+            display: flex;
+            justify-content: space-around;
+            background: $dark;
+            transform: translateY(-500px);
+            transition: transform .5s ease-in-out;
+            animation: appear-menu .3s linear;
+
+            a {
+                color: #ffffff;
+            }
+        }
+
+        @keyframes appear-menu {
+            from { transform: scale(0) }
+            to { transform: scale(1)}
+        }
+    }
+
+    .hero {
+        min-height: 40vh;
+
+        .hero-image {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .hero-content {
+            margin-left: 10%;
+            margin-bottom: 1em;
+            width: fit-content;
+            @include psuedo() {
+                border: 5px solid transparent;
+                border-bottom-color: $red;
+                border-left-color: $red;
+                border-top-color: $red;
+                width: 50%;
+            };
+
+            .psuedo-line {
+                position: absolute;
+                background: $red;
+                width: 5px;
+                height: 1em;
+                left: 50%;
+                transform: translateX(-50%);
+
+                &:nth-child(1) {
+                    top: 0%;
+                }
+                &:nth-child(2) {
+                    bottom: 0%;
+                }
+            }
+            
+            button {
+                @include button($outlined: true, $color: #ffffff);
+                @include psuedo($left: -.4em, $bottom: -1em) {
+                    width: 2.5em;
+                    height: 2.5em;
+                    border: 1px solid transparent;
+                    border-bottom-color: $red;
+                    border-left-color: $red;
+                }
+            }
+            
+            
+        }
+    }
+
+    .home-description {
+        .desc-container {
+            background-repeat: no-repeat;
+            object-fit: contain;
+            background-position: bottom right;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .home-description {
+            .desc-container {
+                background-size: 50% 50%;
+            }
+        }
+    }
+
+}
+
+
+// About Section Starts    
+#about {
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 50%;
+    min-height: 100vh;
+
+    @media screen and (max-width: 768px) {
+         background-size: 100%;
+         background-position: bottom center;
+    }   
+}
+
+// Features Section 
+#features {
+    min-height: 100vh;
+    padding-top: 5em;
+    padding-bottom: 10em;
+
+    .features-heading {
+        @include psuedo($content: 'FEATUERS', $left: 50%, $top: 50%) {
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            letter-spacing: 0.25em;
+            color: white;
+            z-index: 100;
+        }
+    }
+
+    .features-wrapper {
+        .carousel-indicators {
+            margin-bottom: -3em;
+        }
+    }
+}
+
+// ADVERTISING ROW 
+.ads-wrapper {
+    transform: translateY(-50%);
+
+    .wrapper {
+        display: flex;
+        flex-flow: row;
+
+        .ads-image {
+            object-fit: cover;
+            margin-right: 0.8em;
+        }
+
+        p{
+            font-size: 1em;
+            margin-bottom: 1em !important;
+        }
+
+        button {
+            @include button($color: white, $outlined: true);
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .wrapper {
+            p {
+                font-size: 0.6em;
+            }
+            button {
+                @include button($color: white, $outlined: true, $px: 1em, $py: .2em);
+            }
+        }
+    }
+    
+}
+
+#testimonial {
+    min-height: 100vh;
+    display: none;
+
+    .testimonial-wrapper {
+
+        .testimonial-image {
+            position: relative;
+
+            img {
+                position: absolute;
+                height: 40%;
+                width: 40%;
+                object-fit: cover;
+
+                &:nth-child(1) {
+                    top: 0;
+                    left: 40%;
+                    transform: translateX(-50%);
+                    z-index: 1000;
+                }
+                &:nth-child(2) {
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: -2;
+                }
+                &:nth-child(3) {
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 100;
+                }
+                &:nth-child(4) {
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 1;
+                }
+                &:nth-child(2),
+                &:nth-child(3),
+                &:nth-child(4) {
+                    filter: grayscale(100%);
+                }
+            }
+
+            
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .testimonial-image {
+            min-height: 70vh;
+        }
+    }
+
+}
